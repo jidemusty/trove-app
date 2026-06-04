@@ -1,4 +1,5 @@
 import { authClient } from '#/lib/auth-client'
+import { Link } from '@tanstack/react-router'
 
 export default function BetterAuthHeader() {
   const { data: session, isPending } = authClient.useSession()
@@ -33,5 +34,13 @@ export default function BetterAuthHeader() {
     )
   }
 
-  return null
+  return (
+    <Link
+      to="/login"
+      search={{ redirect: undefined }}
+      className="rounded-full bg-[var(--brand)] px-4 py-1.5 text-sm font-semibold text-white no-underline transition hover:opacity-90"
+    >
+      Sign in
+    </Link>
+  )
 }
