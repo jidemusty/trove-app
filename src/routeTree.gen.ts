@@ -14,6 +14,7 @@ import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AppCCCategoryIdRouteImport } from './routes/app/c/c.$categoryId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -40,6 +41,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppCCCategoryIdRoute = AppCCCategoryIdRouteImport.update({
+  id: '/c/c/$categoryId',
+  path: '/c/c/$categoryId',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,12 +53,14 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/app/': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/app/c/c/$categoryId': typeof AppCCCategoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/app': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/app/c/c/$categoryId': typeof AppCCCategoryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,13 +69,27 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/app/': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/app/c/c/$categoryId': typeof AppCCCategoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/login' | '/app/' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/login'
+    | '/app/'
+    | '/api/auth/$'
+    | '/app/c/c/$categoryId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/app' | '/api/auth/$'
-  id: '__root__' | '/' | '/app' | '/login' | '/app/' | '/api/auth/$'
+  to: '/' | '/login' | '/app' | '/api/auth/$' | '/app/c/c/$categoryId'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/login'
+    | '/app/'
+    | '/api/auth/$'
+    | '/app/c/c/$categoryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -114,15 +136,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/c/c/$categoryId': {
+      id: '/app/c/c/$categoryId'
+      path: '/c/c/$categoryId'
+      fullPath: '/app/c/c/$categoryId'
+      preLoaderRoute: typeof AppCCCategoryIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
 interface AppRouteRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppCCCategoryIdRoute: typeof AppCCCategoryIdRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppIndexRoute: AppIndexRoute,
+  AppCCCategoryIdRoute: AppCCCategoryIdRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
