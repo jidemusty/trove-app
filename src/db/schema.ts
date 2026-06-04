@@ -1,7 +1,5 @@
-import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core'
-
-export const todos = pgTable('todos', {
-  id: serial().primaryKey(),
-  title: text().notNull(),
-  createdAt: timestamp('created_at').defaultNow(),
-})
+// Better Auth tables (user, session, account, verification) — generated into
+// auth-schema.ts by the Better Auth CLI. Re-exported here so drizzle-kit and
+// db.query pick them up alongside the app tables added in later phases
+// (categories, links, link_category, share).
+export * from './auth-schema'
