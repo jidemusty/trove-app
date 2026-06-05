@@ -150,6 +150,7 @@ function CategoryCard({
   onDelete: () => void
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
+
   useEffect(() => {
     if (!menuOpen) return
     const onKey = (e: KeyboardEvent) => {
@@ -158,8 +159,10 @@ function CategoryCard({
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [menuOpen])
+
   const accent = colorAccent(category.color)
   const tint = colorTint(category.color)
+
   return (
     <div className="island-shell relative overflow-hidden rounded-2xl transition hover:-translate-y-0.5">
       <Link

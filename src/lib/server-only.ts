@@ -3,7 +3,14 @@
 // Keeping db/auth access out of the server-fn modules' top level prevents
 // node-only deps (pg -> "events") from leaking into the client bundle.
 import { db } from '#/db'
-import { category, link, linkCategory, share } from '#/db/schema.ts'
+import {
+  type Category,
+  category,
+  type Link,
+  link,
+  linkCategory,
+  share,
+} from '#/db/schema'
 import { auth } from '#/lib/auth.ts'
 import { getRequest } from '@tanstack/react-start/server'
 import { and, eq, isNull, sql } from 'drizzle-orm'
@@ -91,3 +98,4 @@ export async function purgeOrphanLinks(ownerId: string) {
 // Re-export the bits the server fn handlers need, so those modules don't import
 // db/drizzle at their own top level (which would leak node deps to the client).
 export { and, category, db, eq, isNull, link, linkCategory, share, sql }
+export type { Category, Link }

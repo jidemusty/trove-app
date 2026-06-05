@@ -20,6 +20,7 @@ function FolderView() {
     queryFn: () => getCategory({ data: { id: categoryId } }),
     retry: false,
   })
+
   const crumbs = useQuery({
     queryKey: ['breadcrumbs', categoryId],
     queryFn: () => getBreadcrumbs({ data: { id: categoryId } }),
