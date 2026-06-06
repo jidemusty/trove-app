@@ -13,9 +13,10 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
-import { Route as AppSSlugRouteImport } from './routes/app/s.$slug'
+import { Route as SSlugRouteImport } from './routes/s.$slug'
+import { Route as ApiUploadRouteImport } from './routes/api/upload'
+import { Route as AppCCategoryIdRouteImport } from './routes/app/c.$categoryId'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
-import { Route as AppCCCategoryIdRouteImport } from './routes/app/c/c.$categoryId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -37,9 +38,19 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppSSlugRoute = AppSSlugRouteImport.update({
+const SSlugRoute = SSlugRouteImport.update({
   id: '/s/$slug',
   path: '/s/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUploadRoute = ApiUploadRouteImport.update({
+  id: '/api/upload',
+  path: '/api/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppCCategoryIdRoute = AppCCategoryIdRouteImport.update({
+  id: '/c/$categoryId',
+  path: '/c/$categoryId',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -47,38 +58,36 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppCCCategoryIdRoute = AppCCCategoryIdRouteImport.update({
-  id: '/c/c/$categoryId',
-  path: '/c/c/$categoryId',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/api/upload': typeof ApiUploadRoute
+  '/s/$slug': typeof SSlugRoute
   '/app/': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/app/s/$slug': typeof AppSSlugRoute
-  '/app/c/c/$categoryId': typeof AppCCCategoryIdRoute
+  '/app/c/$categoryId': typeof AppCCategoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/api/upload': typeof ApiUploadRoute
+  '/s/$slug': typeof SSlugRoute
   '/app': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/app/s/$slug': typeof AppSSlugRoute
-  '/app/c/c/$categoryId': typeof AppCCCategoryIdRoute
+  '/app/c/$categoryId': typeof AppCCategoryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/api/upload': typeof ApiUploadRoute
+  '/s/$slug': typeof SSlugRoute
   '/app/': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/app/s/$slug': typeof AppSSlugRoute
-  '/app/c/c/$categoryId': typeof AppCCCategoryIdRoute
+  '/app/c/$categoryId': typeof AppCCategoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -86,33 +95,38 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/login'
+    | '/api/upload'
+    | '/s/$slug'
     | '/app/'
     | '/api/auth/$'
-    | '/app/s/$slug'
-    | '/app/c/c/$categoryId'
+    | '/app/c/$categoryId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
+    | '/api/upload'
+    | '/s/$slug'
     | '/app'
     | '/api/auth/$'
-    | '/app/s/$slug'
-    | '/app/c/c/$categoryId'
+    | '/app/c/$categoryId'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/login'
+    | '/api/upload'
+    | '/s/$slug'
     | '/app/'
     | '/api/auth/$'
-    | '/app/s/$slug'
-    | '/app/c/c/$categoryId'
+    | '/app/c/$categoryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ApiUploadRoute: typeof ApiUploadRoute
+  SSlugRoute: typeof SSlugRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -146,11 +160,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/app/s/$slug': {
-      id: '/app/s/$slug'
+    '/s/$slug': {
+      id: '/s/$slug'
       path: '/s/$slug'
-      fullPath: '/app/s/$slug'
-      preLoaderRoute: typeof AppSSlugRouteImport
+      fullPath: '/s/$slug'
+      preLoaderRoute: typeof SSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/upload': {
+      id: '/api/upload'
+      path: '/api/upload'
+      fullPath: '/api/upload'
+      preLoaderRoute: typeof ApiUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/c/$categoryId': {
+      id: '/app/c/$categoryId'
+      path: '/c/$categoryId'
+      fullPath: '/app/c/$categoryId'
+      preLoaderRoute: typeof AppCCategoryIdRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/api/auth/$': {
@@ -160,26 +188,17 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/c/c/$categoryId': {
-      id: '/app/c/c/$categoryId'
-      path: '/c/c/$categoryId'
-      fullPath: '/app/c/c/$categoryId'
-      preLoaderRoute: typeof AppCCCategoryIdRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
   }
 }
 
 interface AppRouteRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
-  AppSSlugRoute: typeof AppSSlugRoute
-  AppCCCategoryIdRoute: typeof AppCCCategoryIdRoute
+  AppCCategoryIdRoute: typeof AppCCategoryIdRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppIndexRoute: AppIndexRoute,
-  AppSSlugRoute: AppSSlugRoute,
-  AppCCCategoryIdRoute: AppCCCategoryIdRoute,
+  AppCCategoryIdRoute: AppCCategoryIdRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
@@ -190,6 +209,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
   LoginRoute: LoginRoute,
+  ApiUploadRoute: ApiUploadRoute,
+  SSlugRoute: SSlugRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

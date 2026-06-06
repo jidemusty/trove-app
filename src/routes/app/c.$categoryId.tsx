@@ -7,7 +7,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { ChevronRight, Home, Share2 } from 'lucide-react'
 import { useState } from 'react'
 
-export const Route = createFileRoute('/app/c/c/$categoryId')({
+export const Route = createFileRoute('/app/c/$categoryId')({
   component: FolderView,
 })
 

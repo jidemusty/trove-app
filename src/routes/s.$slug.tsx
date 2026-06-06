@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ChevronRight, Folder, Globe } from 'lucide-react'
 
-export const Route = createFileRoute('/app/s/$slug')({
+export const Route = createFileRoute('/s/$slug')({
   validateSearch: (search: Record<string, unknown>) => ({
     c: typeof search.c === 'string' ? search.c : undefined,
   }),
